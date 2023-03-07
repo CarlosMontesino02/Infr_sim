@@ -1,2 +1,14 @@
 ip addr add 10.0.2.3/24 dev eth0
 ip r add default via 10.0.2.254
+
+sudo useradd -m planta2ftp
+mkdir /home/planta2ftp/ftp
+sudo chown nobody:nogroup /home/planta2ftp/ftp
+sudo chmod a-w /home/planta2ftp/ftp
+sudo mkdir /home/planta2ftp/ftp/upload
+sudo chown planta2ftp:planta2ftp /home/planta2ftp/ftp/upload
+echo "Servidor FTP planta2" | sudo tee /home/planta2ftp/ftp/upload/demo.txt
+
+cp /shared/vsftpd.conf /etc/vsftpd.conf
+
+systemctl reload vsftpd
