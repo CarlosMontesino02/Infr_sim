@@ -1,8 +1,7 @@
 ip addr add 10.0.1.3/24 dev eth0
 ip r add default via 10.0.1.254
 
-apt update
-apt install vsftpd
+apt update && apt install vsftpd -y
 
 useradd -m planta1ftp
 mkdir /home/planta1ftp/ftp
@@ -14,4 +13,4 @@ echo "Servidor FTP planta1" | tee /home/planta1ftp/ftp/upload/demo.txt
 
 cp /shared/vsftpd.conf /etc/vsftpd.conf
 
-systemctl reload vsftpd
+/etc/init.d/vsftpd start

@@ -1,6 +1,8 @@
 ip addr add 10.0.2.3/24 dev eth0
 ip r add default via 10.0.2.254
 
+apt update && apt install vsftpd ftp -y
+
 useradd -m planta2ftp
 mkdir /home/planta2ftp/ftp
 chown nobody:nogroup /home/planta2ftp/ftp
@@ -11,4 +13,4 @@ echo "Servidor FTP planta2" | tee /home/planta2ftp/ftp/upload/demo.txt
 
 cp /shared/vsftpd.conf /etc/vsftpd.conf
 
-systemctl reload vsftpd
+/etc/init.d/vsftpd start

@@ -1,6 +1,4 @@
 ip addr add 10.0.2.1/24 dev eth0
 ip r add default via 10.0.2.254
 #CLiente FTP
-apt update
-sudo apt install filezilla -y
 apt update && apt install ftp -y

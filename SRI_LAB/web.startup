@@ -1,2 +1,15 @@
 ip addr add 10.0.3.1/24 dev eth0
 ip r add default via 10.0.3.254
+#knock
+apt update && apt install knockd -y
+/etc/init.d/knockd start
+
+# ssh2 port accessible through knockd
+iptables -N ssh-allow-knocked-ips
+iptables -A ssh-allow-knocked-ips -j DROP
+iptables -A INPUT -p tcp --dport ssh2 -j ssh-allow-knocked-ips
+iptables -I ssh-allow-knocked-ips -j LOG --log-prefix "did not knock: " --log-level 7
+/etc/init.d/knockd start
+apt install nginx -y
+cp /shared/sites-enabled /etc/nginx/sites-enabled
+service nginx restart
