@@ -1,16 +1,16 @@
 ip addr add 10.0.1.3/24 dev eth0
 ip r add default via 10.0.1.254
 
-sudo apt update && sudo apt upgrade
-sudo apt install vsftpd
+apt update
+apt install vsftpd
 
-sudo useradd -m planta1ftp
+useradd -m planta1ftp
 mkdir /home/planta1ftp/ftp
-sudo chown nobody:nogroup /home/planta1ftp/ftp
-sudo chmod a-w /home/planta1ftp/ftp
-sudo mkdir /home/planta1ftp/ftp/upload
-sudo chown planta1ftp:planta1ftp /home/planta1ftp/ftp/upload
-echo "Servidor FTP planta1" | sudo tee /home/planta1ftp/ftp/upload/demo.txt
+chown nobody:nogroup /home/planta1ftp/ftp
+chmod a-w /home/planta1ftp/ftp
+mkdir /home/planta1ftp/ftp/upload
+chown planta1ftp:planta1ftp /home/planta1ftp/ftp/upload
+echo "Servidor FTP planta1" | tee /home/planta1ftp/ftp/upload/demo.txt
 
 cp /shared/vsftpd.conf /etc/vsftpd.conf
 
