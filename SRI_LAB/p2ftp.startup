@@ -1,6 +1,7 @@
 ip addr add 10.0.2.3/24 dev eth0
 ip r add default via 10.0.2.254
-
+dhclient -r
+dhclient
 apt update && apt install vsftpd ftp -y
 
 useradd -m planta2ftp
@@ -14,3 +15,7 @@ echo "Servidor FTP planta2" | tee /home/planta2ftp/ftp/upload/demo.txt
 cp /shared/vsftpd.conf /etc/vsftpd.conf
 
 /etc/init.d/vsftpd start
+echo "RECUERDA ASIGNAR UAN CONTRASEÑA AL USUARIO FTP"
+echo "RECUERDA ASIGNAR UAN CONTRASEÑA AL USUARIO FTP"
+echo "RECUERDA ASIGNAR UAN CONTRASEÑA AL USUARIO FTP"
+echo "RECUERDA ASIGNAR UAN CONTRASEÑA AL USUARIO FTP"

@@ -1,6 +1,7 @@
 echo "auto eth0 iface eth0 inet dhcp" >> /etc/network/interfaces
 ip r add default via 10.0.1.254
-dhclient eth0
+dhclient -r
+dhclient
 #CLiente FTP
 apt update && apt install ftp -y
-
+apt install knockd -y

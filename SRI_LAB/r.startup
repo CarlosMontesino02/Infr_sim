@@ -2,31 +2,27 @@ ip addr add 10.0.1.254/24 dev eth0
 ip addr add 10.0.2.254/24  dev eth1
 ip addr add 10.0.3.254/24  dev eth2
 
-echo "nameserver 8.8.8.8" > /etc/resolv.conf
-
 echo 1 > /proc/sys/net/ipv4/ip_forward
 
-iptables -t nat -A POSTROUTING -o eth1 -s 10.0.1.0/24 -j SNAT --to-source 172.17.0.2
-iptables -t nat -A POSTROUTING -o eth2 -s 10.0.2.0/24 -j SNAT --to-source 172.17.0.2
+iptables -t nat -A POSTROUTING -o eth3 -s 10.0.1.0/24 -j SNAT --to-source 172.17.0.2
+iptables -t nat -A POSTROUTING -o eth3 -s 10.0.2.0/24 -j SNAT --to-source 172.17.0.2
 iptables -t nat -A POSTROUTING -o eth3 -s 10.0.3.0/24 -j SNAT --to-source 172.17.0.2
-iptables -A INPUT -p tcp --dport 3128 -j ACCEPT
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3128
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 3128
 
-#DNS
-apt update && apt install dnsmasq -y
-cp /shared/custom.conf /etc/dnsmasq.d/custom.conf
+#DHCP
+
+apt update && apt install -y isc-dhcp-server -o Dpkg::Options::="--force-confdef"
+/etc/init.d/isc-dhcp-server start
+
+#Uso dde DNSMASq
+
+apt install dnsmasq -y
 cp /shared/dnsmasq.conf /etc/dnsmasq.conf
+cp /shared/custom.conf /etc/dnsmasq.d/custom.conf 
+/etc/init.d/dnsmasq start
 
-#APARTADO DE WEBMIN
-cp /shared/sources.list /etc/apt/sources.list
+#Instalo webmin
+cp /shared/webmin/sources.list /etc/apt/sources.list
 wget -q -O- http://www.webmin.com/jcameron-key.asc | apt-key add
 apt update && apt install webmin -y
 (echo admin; echo admin) | passwd
 /etc/init.d/webmin start
-
-
-#Servidor DHCP Y servidor DNS con dnsmasq
-apt install isc-dhcp-server -y
-/etc/init.d/isc-dhcp-server start
-

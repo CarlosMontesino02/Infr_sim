@@ -1,6 +1,7 @@
 ip addr add 10.0.1.3/24 dev eth0
 ip r add default via 10.0.1.254
-
+dhclient -r
+dhclient
 apt update && apt install vsftpd -y
 
 useradd -m planta1ftp
